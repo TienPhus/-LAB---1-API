@@ -19,7 +19,6 @@
 ## 🤖 Model
 
 | | |
-|---|---|
 | **Tên model** | GLM-OCR |
 | **Link HuggingFace** | https://huggingface.co/zai-org/GLM-OCR |
 | **Tác giả** | Z.ai (zai-org) |
