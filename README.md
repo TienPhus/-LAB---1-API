@@ -8,9 +8,9 @@
 
 | Thông tin | Chi tiết |
 |---|---|
-| Họ và tên | *(Điền tên của bạn)* |
-| MSSV | *(Điền MSSV)* |
-| Lớp | *(Điền lớp)* |
+| Họ và tên | Đỗ Nguyên Tiến Phú |
+| MSSV | 24120119 |
+| Lớp | 24CTT3 |
 | Môn học | Tư Duy Tính Toán |
 | GVHD | Lê Đức Khoan |
 
@@ -18,7 +18,6 @@
 
 ## 🤖 Model
 
-| | |
 |---|---|
 | **Tên model** | GLM-OCR |
 | **Link HuggingFace** | https://huggingface.co/zai-org/GLM-OCR |
@@ -29,7 +28,7 @@
 
 ---
 
-## 📋 Mô tả hệ thống
+## 📋 Mô tả hệ chức năng thống
 
 API cho phép trích xuất văn bản từ ảnh và tài liệu bằng mô hình GLM-OCR. Hỗ trợ 2 chế độ:
 
@@ -60,11 +59,11 @@ glm-ocr-api/
 
 ### 1. Tạo virtual environment (khuyến khích)
 ```bash
-python -m venv venv
+python -m venv .venv
 # Windows:
-venv\Scripts\activate
+.venv\Scripts\activate
 # Linux/Mac:
-source venv/bin/activate
+source .venv/bin/activate
 ```
 
 ### 2. Cài transformers từ source (bắt buộc cho GLM-OCR)
@@ -135,18 +134,18 @@ curl http://localhost:8000/health
 
 ```bash
 curl -X POST http://localhost:8000/predict/upload \
-  -F "file=@your_image.jpg" \
-  -F "mode=text"
+  -F "file=@test_image.png" \
+  -F "mode=document"
 ```
 
 **Python:**
 ```python
 import requests
 
-with open("invoice.png", "rb") as f:
+with open("test_image.png", "rb") as f:
     res = requests.post(
         "http://localhost:8000/predict/upload",
-        files={"file": ("invoice.png", f, "image/png")},
+        files={"file": ("test_image.png", f, "image/png")},
         data={"mode": "document"}
     )
 print(res.json())
@@ -157,8 +156,8 @@ print(res.json())
 {
   "success": true,
   "mode": "document",
-  "result": "Invoice No: 12345\nDate: 2024-01-15\n...",
-  "message": "OCR completed on uploaded file: invoice.png"
+  "result": "<table class=\"table table-bordered\"><thead><tr><th rowspan=\"2\">Disability Category</th><th rowspan=\"2\">Participants</th><th rowspan=\"2\">Ballots Completed</th><th rowspan=\"2\">Ballots Incomplete/ Terminated</th><th colspan=\"2\">Results</th></tr><tr><th>Accuracy</th><th>Time to complete</th></tr></thead><tbody><tr><td>Blind</td><td>5</td><td>1</td><td>4</td><td>34.5%</td><td>n=1</td><td>1199 sec, n=1</td></tr><tr><td>Low Vision</td><td>5</td><td>2</td><td>3</td><td>98.3%</td><td>n=2<br>(97.7%, n=3)</td><td>1716 sec, n=3<br>(1934 sec, n=2)</td></tr><tr><td>Dexterity</td><td>5</td><td>4</td><td>1</td><td>98.3%</td><td>n=4</td><td>1672.1 sec, n=4</td></tr><tr><td>Mobility</td><td>3</td><td>3</td><td>0</td><td>95.4%</td><td>n=3</td><td>1416 sec, n=3</td></tr></tbody></table><|user|>",
+  "message": "OCR completed on uploaded file: test_image.png"
 }
 ```
 
@@ -169,7 +168,7 @@ print(res.json())
 ```bash
 curl -X POST http://localhost:8000/predict/url \
   -H "Content-Type: application/json" \
-  -d '{"url": "https://example.com/image.jpg", "mode": "text"}'
+  -d '{"url": "https://funteacherfiles.com/wp-content/uploads/2022/10/Slide2-3.jpg", "mode": "text"}'
 ```
 
 **Python:**
@@ -179,8 +178,8 @@ import requests
 res = requests.post(
     "http://localhost:8000/predict/url",
     json={
-        "url": "https://example.com/document.jpg",
-        "mode": "document"
+        "url": "https://funteacherfiles.com/wp-content/uploads/2022/10/Slide2-3.jpg",
+        "mode": "text"
     }
 )
 print(res.json())
@@ -191,7 +190,7 @@ print(res.json())
 {
   "success": true,
   "mode": "text",
-  "result": "Hello World! This is extracted text.",
+  "result": "The Tent\n\nTed has a red tent.\nHe is in the tent.\nBen is in the tent,\ntoo. Ten hens ran\ninto the tent. But,\nthe tent fell on Ted,\nBen and the ten\nhens.\n\nfunteacherfiles.com<|user|>",
   "message": "OCR completed from URL."
 }
 ```
