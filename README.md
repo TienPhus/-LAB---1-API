@@ -220,6 +220,4 @@ python test_api.py
 
 ## 🎬 Video demo
 
-> *(Thêm link video vào đây sau khi quay)*
-
-[![Demo Video](https://img.shields.io/badge/▶_Watch_Demo-YouTube-red)](https://youtube.com/your-link-here)
+[![Demo Video](https://img.shields.io/badge/▶_Watch_Demo-YouTube-red)]([https://youtube.com/your-link-here](https://youtu.be/pyelA4hDWAM))
