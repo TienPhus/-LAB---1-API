@@ -18,6 +18,7 @@
 
 ## 🤖 Model
 
+| | |
 |---|---|
 | **Tên model** | GLM-OCR |
 | **Link HuggingFace** | https://huggingface.co/zai-org/GLM-OCR |
